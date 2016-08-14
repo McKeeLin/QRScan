@@ -1,0 +1,35 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "fe45c425-07ce-1cdf-50e9-ce57b7db7bff",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "6fae9d69-1a42-0f01-5215-ce57b7db7bff++505" : {
+
+    },
+    "fe45c425-07ce-1cdf-50e9-ce57b7db7bff" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "6fae9d69-1a42-0f01-5215-ce57b7db7bff++505" : 0,
+    "fe45c425-07ce-1cdf-50e9-ce57b7db7bff" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "10DF1A46-53E0-434C-A7F6-C5511C973BD6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "6fae9d69-1a42-0f01-5215-ce57b7db7bff++505" : "..\/..",
+    "fe45c425-07ce-1cdf-50e9-ce57b7db7bff" : "QRScan\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "QRScan",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "QRScan.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/onevcat\/VVDocumenter-Xcode.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6fae9d69-1a42-0f01-5215-ce57b7db7bff++505"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/McKeeLin\/QRScan.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "fe45c425-07ce-1cdf-50e9-ce57b7db7bff"
+    }
+  ]
+}
