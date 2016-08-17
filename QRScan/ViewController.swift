@@ -17,6 +17,7 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
     var _session = AVCaptureSession()
     var _previewLayer = AVCaptureVideoPreviewLayer()
     var _output = AVCaptureMetadataOutput()
+    var _player: AVAudioPlayer?
     
     //建立的SystemSoundID对象
     var soundID:SystemSoundID = 0
@@ -47,13 +48,24 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
         super.viewDidLoad()
         
         //获取声音地址
-        let path = NSBundle.mainBundle().pathForResource("qrcode_found", ofType: "wav")
+        let path = NSBundle.mainBundle().pathForResource("qrcode", ofType: "wav")
         
         //地址转换
-        let baseURL = NSURL(fileURLWithPath: path!)
+        //let baseURL = NSURL(fileURLWithPath: path!)
         
         //赋值
-        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        //AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        
+        let soundData = NSData(contentsOfFile: path!)
+        
+        do
+        {
+            _player = try AVAudioPlayer(data: soundData!)
+        }
+        catch
+        {
+            return
+        }
         
         _button!.selected = false
         let cameras = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
@@ -210,7 +222,7 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
             if code.characters.count > 0
             {
                 //播放声音
-                AudioServicesPlaySystemSound(soundID)
+                _player!.play()
                 print("the code is: \(code)")
                 
                 _session.stopRunning()
