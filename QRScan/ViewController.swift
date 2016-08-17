@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import AudioToolbox
+
 
 class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
 
@@ -15,6 +17,11 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
     var _session = AVCaptureSession()
     var _previewLayer = AVCaptureVideoPreviewLayer()
     var _output = AVCaptureMetadataOutput()
+    
+    //建立的SystemSoundID对象
+    var soundID:SystemSoundID = 0
+    
+    @IBOutlet var _button: UIButton?
     
     /*
     var _tlMask = UIView(frame: CGRectZero)
@@ -39,10 +46,20 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let cameras = AVCaptureDevice.devices(withMediaType: AVMediaTypeVideo)
+        //获取声音地址
+        let path = NSBundle.mainBundle().pathForResource("qrcode_found", ofType: "wav")
+        
+        //地址转换
+        let baseURL = NSURL(fileURLWithPath: path!)
+        
+        //赋值
+        AudioServicesCreateSystemSoundID(baseURL, &soundID)
+        
+        _button!.selected = false
+        let cameras = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
         for camera in cameras!
         {
-            if camera.position == AVCaptureDevicePosition.back
+            if camera.position == AVCaptureDevicePosition.Back
             {
                 _camera = camera as? AVCaptureDevice;
                 _session.sessionPreset = AVCaptureSessionPresetHigh
@@ -57,23 +74,22 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
                     return
                 }
                 
-                let port  = AVCaptureInputPort()
-                
-                let queue = DispatchQueue(label:"ScanQueue") //DispatchQueue("ScanQueue", nil, nil)
-                let types = [AVMetadataObjectTypeEAN13Code,
-                    AVMetadataObjectTypeEAN8Code,
-                    AVMetadataObjectTypeCode128Code]
-                print("\(types)")
-                
-                _output.setMetadataObjectsDelegate(self,queue:queue)
-                _output.metadataObjectTypes = types
-                
                 _session.addInput(input)
                 _session.addOutput(_output)
+                
+                
+                let types = [AVMetadataObjectTypeQRCode,AVMetadataObjectTypeEAN13Code,
+                             AVMetadataObjectTypeEAN8Code,
+                             AVMetadataObjectTypeCode128Code]
+                print("\(types)")
+                
+                _output.setMetadataObjectsDelegate(self,queue:dispatch_get_main_queue())
+                _output.metadataObjectTypes = types
                 
                 _previewLayer = AVCaptureVideoPreviewLayer(session: _session)
                 _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                 self.view.layer.addSublayer(_previewLayer)
+                self.view.layer.insertSublayer(_previewLayer, below:_button!.layer)
                 
                 /*
                 let maskColor = UIColor(red:0, green:0, blue:0, alpha:0.5)
@@ -116,13 +132,13 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool)
+    override func viewDidAppear(animated: Bool)
     {
         super.viewDidAppear(animated)
         _session.startRunning()
     }
     
-    override func viewWillDisappear(_ animated: Bool)
+    override func viewWillDisappear(animated: Bool)
     {
         super.viewWillDisappear(animated)
         _session.stopRunning()
@@ -147,19 +163,94 @@ class ViewController: UIViewController,AVCaptureMetadataOutputObjectsDelegate {
         }
         */
     }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation)
+    {
+        let connection = _previewLayer.connection!
+        if( connection.supportsVideoOrientation )
+        {
+            let statusBarOrientation = UIApplication.sharedApplication().statusBarOrientation
+            var layerOrientation = AVCaptureVideoOrientation.Portrait
+            switch statusBarOrientation
+            {
+            case UIInterfaceOrientation.Portrait:
+                layerOrientation = AVCaptureVideoOrientation.Portrait
+                break
+                
+            case UIInterfaceOrientation.PortraitUpsideDown:
+                layerOrientation = AVCaptureVideoOrientation.PortraitUpsideDown
+                break
+                
+            case UIInterfaceOrientation.LandscapeLeft:
+                layerOrientation = AVCaptureVideoOrientation.LandscapeLeft
+                break
+                
+            case UIInterfaceOrientation.LandscapeRight:
+                layerOrientation = AVCaptureVideoOrientation.LandscapeRight
+                break
+                
+            default:
+                layerOrientation = AVCaptureVideoOrientation.Portrait
+            }
+            
+            connection.videoOrientation = layerOrientation
+        }
+    }
+    
 
-    func captureOutput(_ captureOutput: AVCaptureOutput!,
+    func captureOutput(captureOutput: AVCaptureOutput!,
                        didOutputMetadataObjects metadataObjects: [AnyObject]!, from
         connection: AVCaptureConnection!)
     {
+        print("....1")
         for obj in metadataObjects
         {
             let codeObj = obj as! AVMetadataMachineReadableCodeObject
-            if codeObj.stringValue.characters.count > 0
+            var code = codeObj.stringValue!
+            if code.characters.count > 0
             {
-                print("the code is: \(codeObj.stringValue)")
+                //播放声音
+                AudioServicesPlaySystemSound(soundID)
+                print("the code is: \(code)")
+                
+                _session.stopRunning()
+                _button!.selected = true
+                
+                print("....2")
+                let successAlert = UIAlertController(title:"抓取到的内容是:", message:code, preferredStyle: .Alert)
+                successAlert.addAction(UIAlertAction(title:"关闭", style: .Default, handler: { (_) -> Void in
+                }))
+                successAlert.addAction(UIAlertAction(title:"复制", style: .Default, handler: { (_) -> Void in
+                    let pastedboard = UIPasteboard.generalPasteboard()
+                    pastedboard.string = code
+                }))
+                successAlert.addAction(UIAlertAction(title:"用Safari打开", style: .Default, handler: { (_) -> Void in
+                    if (!code.hasPrefix("http://")) && (!code.hasPrefix("https://"))
+                    {
+                        code = "http://" + code
+                    }
+                    UIApplication.sharedApplication().openURL(NSURL(string: code)!)
+                }))
+                print("....3")
+                self.presentViewController(successAlert, animated: true, completion: nil)
+                
             }
         }
     }
+    
+    @IBAction func onTouchButton(button: UIButton)
+    {
+        if( button.selected == false )
+        {
+            _session.stopRunning()
+            button.selected = true;
+        }
+        else
+        {
+            _session.startRunning()
+            button.selected = false
+        }
+    }
+    
 }
 

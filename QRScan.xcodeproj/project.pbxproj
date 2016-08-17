@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		261DC7271D6447EA006DDA77 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 261DC7261D6447EA006DDA77 /* audio */; };
 		26ED79291D5C175000D6F295 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED79281D5C175000D6F295 /* AppDelegate.swift */; };
 		26ED792B1D5C175000D6F295 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED792A1D5C175000D6F295 /* ViewController.swift */; };
 		26ED792E1D5C175000D6F295 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26ED792C1D5C175000D6F295 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		261DC7261D6447EA006DDA77 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = audio; sourceTree = "<group>"; };
 		26ED79251D5C175000D6F295 /* QRScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26ED79281D5C175000D6F295 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26ED792A1D5C175000D6F295 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		26ED79271D5C175000D6F295 /* QRScan */ = {
 			isa = PBXGroup;
 			children = (
+				261DC7261D6447EA006DDA77 /* audio */,
 				26ED79281D5C175000D6F295 /* AppDelegate.swift */,
 				26ED792A1D5C175000D6F295 /* ViewController.swift */,
 				26ED792C1D5C175000D6F295 /* Main.storyboard */,
@@ -100,8 +103,8 @@
 				TargetAttributes = {
 					26ED79241D5C175000D6F295 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = F3HAA63VCU;
-						DevelopmentTeamName = "景隆 林 (Personal Team)";
+						DevelopmentTeam = D9KLEDDTR3;
+						DevelopmentTeamName = "JingLong Lin";
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -132,6 +135,7 @@
 				26ED79331D5C175000D6F295 /* LaunchScreen.storyboard in Resources */,
 				26ED79301D5C175000D6F295 /* Assets.xcassets in Resources */,
 				26ED792E1D5C175000D6F295 /* Main.storyboard in Resources */,
+				261DC7271D6447EA006DDA77 /* audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,8 +262,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = QRScan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mckeelin.QRScan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mckeelin.myscan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2132d05d-6e22-4f61-8647-affc0259f350";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -268,10 +273,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JingLong Lin (D9KLEDDTR3)";
 				INFOPLIST_FILE = QRScan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mckeelin.QRScan;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mckeelin.myscan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2132d05d-6e22-4f61-8647-affc0259f350";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
