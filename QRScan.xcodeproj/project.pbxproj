@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		261DC7271D6447EA006DDA77 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 261DC7261D6447EA006DDA77 /* audio */; };
-		2653FE851D64573300496DA8 /* qrcode.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2653FE841D64573300496DA8 /* qrcode.wav */; };
 		26ED79291D5C175000D6F295 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED79281D5C175000D6F295 /* AppDelegate.swift */; };
 		26ED792B1D5C175000D6F295 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ED792A1D5C175000D6F295 /* ViewController.swift */; };
 		26ED792E1D5C175000D6F295 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26ED792C1D5C175000D6F295 /* Main.storyboard */; };
@@ -19,7 +18,6 @@
 
 /* Begin PBXFileReference section */
 		261DC7261D6447EA006DDA77 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; path = audio; sourceTree = "<group>"; };
-		2653FE841D64573300496DA8 /* qrcode.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = qrcode.wav; sourceTree = "<group>"; };
 		26ED79251D5C175000D6F295 /* QRScan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QRScan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26ED79281D5C175000D6F295 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26ED792A1D5C175000D6F295 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 		26ED79271D5C175000D6F295 /* QRScan */ = {
 			isa = PBXGroup;
 			children = (
-				2653FE841D64573300496DA8 /* qrcode.wav */,
 				261DC7261D6447EA006DDA77 /* audio */,
 				26ED79281D5C175000D6F295 /* AppDelegate.swift */,
 				26ED792A1D5C175000D6F295 /* ViewController.swift */,
@@ -84,6 +81,7 @@
 				26ED79211D5C175000D6F295 /* Sources */,
 				26ED79221D5C175000D6F295 /* Frameworks */,
 				26ED79231D5C175000D6F295 /* Resources */,
+				26CE85641D6567B300364CA9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -137,13 +135,28 @@
 			files = (
 				26ED79331D5C175000D6F295 /* LaunchScreen.storyboard in Resources */,
 				26ED79301D5C175000D6F295 /* Assets.xcassets in Resources */,
-				2653FE851D64573300496DA8 /* qrcode.wav in Resources */,
 				26ED792E1D5C175000D6F295 /* Main.storyboard in Resources */,
 				261DC7271D6447EA006DDA77 /* audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		26CE85641D6567B300364CA9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\ntoday=\"`date +\"%m%d%H%M\"`\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $today\" \"$INFOPLIST_FILE\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		26ED79211D5C175000D6F295 /* Sources */ = {

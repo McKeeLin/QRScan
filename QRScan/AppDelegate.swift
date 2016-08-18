@@ -8,6 +8,11 @@
 
 import UIKit
 
+/*
+ 您有责任遵守出口条例，并且在您的加密或豁免状态变化时，必须重新查看这些问题。如果您的加密和豁免资格保持不变，请使用您的 Info.plist 中的以下键值对，以在构建版本中提供出口合规信息：
+ <key>ITSAppUsesNonExemptEncryption</key><false/>
+ */
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
